@@ -13,7 +13,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use('/user', UserController);
-app.use('/player', PlayerController);
+app.use('/players', PlayerController);
 
 const port = process.env.PORT || 3000;
 

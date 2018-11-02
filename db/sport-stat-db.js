@@ -43,3 +43,12 @@ exports.getAllPlayer = function(callback) {
     callback(null, results);
   });
 };
+
+exports.getPlayerInfoByPage = function(page, limit, callback) {
+  var start = (page - 1) * limit;
+  var sql = 'SELECT * FROM player_basic_info ' + start + ' LIMIT' + limit;
+  connection.query(sql, function (error, results, fields) {
+    if (error) callback(error);
+    callback(null, results);
+  });
+};
