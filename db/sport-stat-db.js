@@ -31,7 +31,7 @@ exports.getPlayerInfoByName = function(playerName, callback) {
     'SELECT * from player_basic_info WHERE name = ?', [playerName], 
     function (error, results, fields) {
     if (error) callback(error);
-    //console.log(results);
+    console.log(results);
     callback(null, results);
   });
 }
