@@ -1,0 +1,17 @@
+.thumbnail img{
+    width:100%;
+    max-height: 300px;
+}
+
+.panel-head a{
+    margin-right: 20px;
+    margin-bottom:0px;
+    margin-top: 10px;
+}
+.panel-body{
+    padding-top: 5px;
+}
+
+.delete-form{
+    display: inline;
+}
