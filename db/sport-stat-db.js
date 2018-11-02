@@ -24,8 +24,6 @@ connection.connect(function(err) {
 //     console.log('The result is:', results);
 //   }); 
 
-var callback = function(){};
-
 exports.getPlayerInfoByName = function(playerName, callback) {
   connection.query(
     'SELECT * from player_basic_info WHERE name = ?', [playerName], 
@@ -36,9 +34,12 @@ exports.getPlayerInfoByName = function(playerName, callback) {
 
     callback(null, results);
   });
-}
+};
 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
+exports.getAllPlayer = function(callback) {
+  connection.query('SELECT * FROM player_basic_info',
+  function (error, results, fields) {
+    if (error) callback(error);
+    callback(null, results);
+  });
+};

@@ -18,4 +18,15 @@ router.get('/', function(req, res) {
     });        
 });
 
+router.get('/all', function(req, res) {
+    console.log('Query all player');
+    db.getAllPlayer(function(err, results) {
+        if (err) {
+            console.log('Query all player failed', err);
+            res.status(500).send("Query Failed");
+        }
+        res.status(200).send(results);
+    });
+});
+
 module.exports = router;
