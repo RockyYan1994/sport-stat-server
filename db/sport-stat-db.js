@@ -43,3 +43,11 @@ exports.getAllPlayer = function(callback) {
     callback(null, results);
   });
 };
+
+exports.getAllPlayerName = function(callback) {
+  connection.query('SELECT name FROM player_basic_info',
+  function (error, results, fields) {
+    if (error) callback(error);
+    callback(null, results);
+  });
+};

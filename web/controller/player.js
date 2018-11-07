@@ -29,4 +29,15 @@ router.get('/all', function(req, res) {
     });
 });
 
+router.get('/all-name', function(req, res) {
+    console.log('Query all player name');
+    db.getAllPlayerName(function(err, results) {
+        if (err) {
+            console.log('Query all player name failed', err);
+            res.status(500).send("Query Failed");
+        }
+        res.status(200).send(results);
+    });
+});
+
 module.exports = router;
