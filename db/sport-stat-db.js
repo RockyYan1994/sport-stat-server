@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
     host     : 'sport-stat-db.ce5yfibisle8.us-west-1.rds.amazonaws.com',
     user     : 'sportStatMaster',
     password : 'lgnblgnb',
-    database : 'player_info_spider'
+    database : 'sport_stat_db'
     //database : 'sport_stat_db'
   });
 
