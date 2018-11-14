@@ -4,6 +4,7 @@ const userDB = require('./db/sport-stat-user-db.js');
 const db = require('./db/sport-stat-db');
 const UserController = require('./web/controller/auth');
 const PlayerController = require('./web/controller/player');
+const ProfileController = require('./web/controller/profile');
 
 // Create a new Express application.
 var app = express();
@@ -14,6 +15,7 @@ app.set('view engine', 'ejs');
 
 app.use('/user', UserController);
 app.use('/player', PlayerController);
+app.use('/profile', ProfileController);
 
 const port = process.env.PORT || 3000;
 
