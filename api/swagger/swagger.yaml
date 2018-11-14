@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 'sport-stat'
+  description: sport-stat api document
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: jucaiy@uci.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# paths: {}
+# Added by API Auto Mocking Plugin
+# host: https://sport-stat-server.herokuapp.com/
+basePath: /api-docs
+schemes:
+ - http
+
+tags:
+- name: player
+  description: get player information
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: profile
+  description: This is temperary user profile API
+- name: user
+  description: Operations about user
+
+paths:
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Created user object
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+  /player:
+    get:
+      tags:
+      - player
+      summary: player information API
+      description: This is for get player information interface.
+      operationId: getPlayer
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: get player information by name
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        default:
+          description: successful operation
+  /profile:
+    post:
+      tags:
+      - profile
+      summary: upload user profile
+      description: This is to upload user profile
+      operationId: uploadProfile
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: get player information by name
+        required: true
+        schema:
+          type: string
+          format: base64
+      responses:
+        default:
+          description: successful operation
+          
+definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    xml:
+      name: User
+      
+  Player:
+    type: object
+    properties:
+      playerName:
+        type: string
+    xml:
+      name: Player
+
+          
