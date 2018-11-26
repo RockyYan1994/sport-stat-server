@@ -2,6 +2,8 @@ const mysql = require('mysql');
 
 var exports = module.exports = {};
 
+const tableName = 'playerBasicInfo';
+
 var connection = mysql.createConnection({
     host     : 'sport-stat-db.ce5yfibisle8.us-west-1.rds.amazonaws.com',
     user     : 'sportStatMaster',
@@ -25,8 +27,12 @@ connection.connect(function(err) {
 //   }); 
 
 exports.getPlayerInfoByName = function(playerName, callback) {
+  var firstName = playerName.split(" ")[0];
+  var lastName = playerName.split(" ")[1];
+  console.log(firstName + ' ' + lastName);
+  var sql = 'SELECT * from ' + tableName + ' WHERE playerFirstName = ?  AND playerLastName = ?';
   connection.query(
-    'SELECT * from player_basic_info WHERE name = ?', [playerName], 
+    sql, [firstName, lastName], 
     function (error, results, fields) {
     if (error) callback(error);
     console.log("Mysql search results", results);
@@ -37,7 +43,8 @@ exports.getPlayerInfoByName = function(playerName, callback) {
 };
 
 exports.getAllPlayer = function(callback) {
-  connection.query('SELECT * FROM player_basic_info',
+  var sql = 'SELECT * from ' + tableName + ' ';
+  connection.query(sql,
   function (error, results, fields) {
     if (error) callback(error);
     callback(null, results);
@@ -45,9 +52,21 @@ exports.getAllPlayer = function(callback) {
 };
 
 exports.getAllPlayerName = function(callback) {
-  connection.query('SELECT name FROM player_basic_info',
+  var sql = 'SELECT CONCAT_WS(" ", `playerFirstName`, `playerLastName`) AS `playerName` from ' + tableName;
+  connection.query(sql,
   function (error, results, fields) {
     if (error) callback(error);
     callback(null, results);
   });
 };
+
+exports.getPlayerByOrder = function(orderItem, asc, callback) {
+  var sort = asc ? "ASC" : "DESC";
+  var sql = 'SELECT * FROM ' + tableName + ' ORDER BY \`' + orderItem + '\` ' + sort;
+  console.log(sql);
+  connection.query(sql,
+  function (error, results, fields) {
+    if (error) callback(error);
+    callback(null, results);
+  }); 
+}
