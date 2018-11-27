@@ -69,4 +69,31 @@ router.get('/average', function(req, res) {
     });
 });
 
+router.get('/average/stat-type', function(req, res) {
+    var playerName = req.query.playerName;
+    var statType = req.query.statType;    
+    
+    console.log(playerName + ', ' + statType);
+    playerAverageStatService.getPlayerAverageStatByNameAndStatType(playerName, statType, function(err, results) {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Data access failed");
+        }        
+        res.status(200).send(results);
+    });
+});
+
+router.get('/average/seasonID', function(req, res) {
+    var playerName = req.query.playerName;
+    var seasonID = req.query.seasonID;
+    console.log(playerName + ', ' + seasonID);
+    playerAverageStatService.getPlayerAverageStatByNameAndSeasonID(playerName, seasonID, function(err, results) {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Data access failed");
+        }        
+        res.status(200).send(results);
+    });
+});
+
 module.exports = router;
