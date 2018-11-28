@@ -1,12 +1,12 @@
 const _ = require('lodash');
-const winston = require('winston');
-var express = require('express');
+const express = require('express');
 var router = express();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
 var {User} = require('../../model/user');
 var {authenticate} = require('./../../middleware/authenticate');
+var {logger} = require('../../util/logger');
 
 
 var jwt = require('jsonwebtoken');
@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
     var user = new User(body);
     console.log(JSON.stringify(user));
-    winston.log('info', JSON.stringify(user));
+    logger.info(JSON.stringify(user));
     user.save().then(() => {
       return user.generateAuthToken();
     }).then((token) => {
@@ -29,13 +29,13 @@ router.post('/', (req, res) => {
   });
   
 router.get('/me', authenticate, (req, res) => {
-    winston.log('info', JSON.stringify(req.user));
+    logger.info(JSON.stringify(user));    
     res.send(req.user);
   });
   
 router.post('/login', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password']);
-    winston.log('info', JSON.stringify(body));
+    var body = _.pick(req.body, ['email', 'password']);    
+    logger.info(JSON.stringify(body));
     User.findByCredentials(body.email, body.password).then((user) => {
       return user.generateAuthToken().then((token) => {
         res.header('x-auth', token).send(user);
@@ -45,8 +45,8 @@ router.post('/login', (req, res) => {
     });
   });
   
-router.delete('/me/token', authenticate, (req, res) => {
-    winston.log('info', JSON.stringify(req.token));
+router.delete('/me/token', authenticate, (req, res) => {    
+    logger.info(JSON.stringify(req.token));
     req.user.removeToken(req.token).then(() => {
       res.status(200).send();
     }, () => {
