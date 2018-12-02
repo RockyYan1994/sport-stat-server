@@ -36,7 +36,7 @@ exports.getPlayerInfoByName = function(playerName, callback) {
     function (error, results, fields) {
     if (error) callback(error);
     console.log("Mysql search results", results);
-    console.log("Mysql search results[0]", results[0]);
+    //console.log("Mysql search results[0]", results[0]);
 
     callback(null, results);
   });

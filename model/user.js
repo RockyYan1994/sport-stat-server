@@ -5,6 +5,13 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    unique: true
+  },
   email: {
     type: String,
     required: true,
@@ -30,7 +37,24 @@ var UserSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  avatar: {
+    require: false,
+    type: String,
+
+  },
+  favoriteTeam: {
+    require: false,
+    type: String
+  },
+  favoritePlayer: {
+    require: false,
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 UserSchema.methods.toJSON = function () {
@@ -93,7 +117,8 @@ UserSchema.statics.findByCredentials = function (email, password) {
         if (res) {
           resolve(user);
         } else {
-          reject();
+          console.log("password is not correct");
+          reject(new Error("password is not correct"));
         }
       });
     });

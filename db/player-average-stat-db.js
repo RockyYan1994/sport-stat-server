@@ -31,3 +31,42 @@ exports.getPlayerAverageStatByName = function(playerID, callback) {
     callback(null, results);
   });
 };
+
+exports.getPlayerAverageStatByNameAndStatType = function(playerID, statType, callback) {
+  var sql = 'SELECT * from ' + tableName + ' WHERE playerID = ? AND statType = ? ';
+  connection.query(
+    sql, [playerID, statType], 
+    function (error, results, fields) {
+    if (error) callback(error);
+    //console.log("Mysql search results", results);
+    console.log("Mysql search results[0]", results[0]);
+
+    callback(null, results);
+  });
+};
+
+exports.getPlayerAverageStatByNameAndSeasonID = function(playerID, seasonID, callback) {
+  var sql = 'SELECT * from ' + tableName + ' WHERE playerID = ? AND seasonID = ? ';
+  connection.query(
+    sql, [playerID, seasonID],
+    function (error, results, fields) {
+    if (error) callback(error);
+    //console.log("Mysql search results", results);
+    console.log("Mysql search results[0]", results[0]);
+
+    callback(null, results);
+  });
+};
+
+exports.getPlayerAverageStatByNameAndStatTypeAndSeasonID = function(playerID, statType, seasonID, callback) {
+  var sql = 'SELECT * FROM ' + tableName + ' WHERE playerID = ? AND statType = ? AND seasonID = ? ';
+  connection.query(
+    sql, [playerID, statType, seasonID], 
+    function (error, results, fields) {
+    if (error) callback(error);
+    //console.log("Mysql search results", results);
+    console.log("Mysql search results[0]", results[0]);
+
+    callback(null, results);
+  });
+}

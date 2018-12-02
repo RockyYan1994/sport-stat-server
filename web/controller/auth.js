@@ -14,9 +14,8 @@ var bcrypt = require('bcryptjs');
 
 // POST /user
 router.post('/', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password']);
+    var body = _.pick(req.body, ['email', 'password', 'username']);
     var user = new User(body);
-    console.log(JSON.stringify(user));
     logger.info(JSON.stringify(user));
     user.save().then(() => {
       return user.generateAuthToken();
@@ -24,12 +23,13 @@ router.post('/', (req, res) => {
       console.log(token);
       res.header('x-auth', token).send(user);
     }).catch((e) => {
+      console.log(e);
       res.status(400).send(e);
     })
   });
   
-router.get('/me', authenticate, (req, res) => {
-    logger.info(JSON.stringify(user));    
+router.get('/me', authenticate.isAuthenticated, (req, res) => {
+    logger.info(JSON.stringify(req.user));
     res.send(req.user);
   });
   
@@ -40,12 +40,12 @@ router.post('/login', (req, res) => {
       return user.generateAuthToken().then((token) => {
         res.header('x-auth', token).send(user);
       });
-    }).catch((e) => {
-      res.status(400).send();
+    }).catch((e) => {            
+      res.status(401).send(e);
     });
   });
   
-router.delete('/me/token', authenticate, (req, res) => {    
+router.delete('/me/token', authenticate.isAuthenticated, (req, res) => {    
     logger.info(JSON.stringify(req.token));
     req.user.removeToken(req.token).then(() => {
       res.status(200).send();
