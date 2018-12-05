@@ -5,10 +5,13 @@ var exports = module.exports = {};
 const tableName = 'playerBasicInfo';
 
 var connection = mysql.createConnection({
+<<<<<<< HEAD
     host     : 'sport-stat-db.ce5yfibisle8.us-west-1.rds.amazonaws.com',
     user     : 'sportStatMaster',
     password : 'lgnblgnb',
     database : 'sport_stat_db'
+=======
+>>>>>>> 715a424023c3cc72019624a700c42be18b17ae83
     //database : 'sport_stat_db'
   });
 
@@ -60,6 +63,7 @@ exports.getAllPlayerName = function(callback) {
   });
 };
 
+<<<<<<< HEAD
 exports.getPlayerByOrder = function(orderItem, asc, callback) {
   var sort = asc ? "ASC" : "DESC";
   var sql = 'SELECT * FROM ' + tableName + ' ORDER BY \`' + orderItem + '\` ' + sort;
@@ -70,3 +74,13 @@ exports.getPlayerByOrder = function(orderItem, asc, callback) {
     callback(null, results);
   }); 
 }
+=======
+exports.getPlayerInfoByPage = function(page, limit, callback) {
+  var start = (page - 1) * limit;
+  var sql = 'SELECT * FROM player_basic_info ' + start + ' LIMIT' + limit;
+  connection.query(sql, function (error, results, fields) {
+    if (error) callback(error);
+    callback(null, results);
+  });
+};
+>>>>>>> 715a424023c3cc72019624a700c42be18b17ae83
