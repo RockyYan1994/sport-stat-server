@@ -18,14 +18,14 @@ const swaggerDocument = YAML.load('./api/swagger/swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Configure view engine to render EJS templates.
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'ejs');
 
 app.use('/user', UserController);
 app.use('/player', PlayerController);
 app.use('/profile', ProfileController);
 app.use('/topic', TopicController);
-app.use('/comment',CommentController);
+app.use('/comment', CommentController);
 
 const port = process.env.PORT || 3000;
 
